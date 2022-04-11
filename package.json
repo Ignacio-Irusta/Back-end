@@ -5,11 +5,14 @@
   "main": "Clase6.js",
   "dependencies": {
     "express": "^4.17.3",
+    "multer": "^1.4.4",
     "nodemon": "^2.0.15"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node Clase8.js",
+    "start:dev": "node Clase8.js"
   },
   "repository": {
     "type": "git",
