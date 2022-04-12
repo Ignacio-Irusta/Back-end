@@ -27,7 +27,11 @@ app.use(express.static('public'))
       return next(error)
     }
     res.send(`Archivo <b>${file.originalname}</b> subido exitosamente`)
-  })*/
+  })
+  async guardar(sadas){
+  await fs.promises.writeFile('Array.js', JSON.stringify(data, null, '\t'))
+  } 
+  */
 
 //------------------------------------------------------------------------
 
@@ -58,9 +62,8 @@ app.post('/api/productos', ({ body }, res) => {
     const htmlBody = body;
     arrays.push(htmlBody)
     arrays.forEach((item,index) => item.id = index)
-    const lastobject = arrays.pop()
-    console.log(lastobject);
-    res.json(lastobject)
+    console.log(arrays);
+    res.json(arrays)
 })
 
 app.put('/api/productos/:id', ({ body, params }, res) => {

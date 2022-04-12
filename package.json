@@ -11,8 +11,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node Clase8.js",
-    "start:dev": "node Clase8.js"
+    "start": "node Ejercicio4.js",
+    "start:dev": "node Ejercicio4.js"
   },
   "repository": {
     "type": "git",
