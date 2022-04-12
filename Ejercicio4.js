@@ -107,10 +107,24 @@ app.put('/api/productos/:id', ({ body, params, req }, res) => {
 })
 
 app.delete('/api/productos/:id', ({ params }, res) => {
-    console.log("Recibio una peticion de borrado");
-    res.json({ 
-        result: 'ok',
-        id: req.params.id })
+    const result = JSON.stringify(articulo)
+    const codResult = JSON.parse(result)
+    const ekis = codResult.productos
+    const id = req.params.id
+    const filter = ekis.filter(function(array){
+        return array.id == id;
+    })
+    if(filter.length==0){
+        res.json({ error : 'producto no encontrado' })
+    }
+    ekis.splice(id, 1);
+    try {
+        fs.promises.writeFile('productos.js', JSON.stringify(ekis, null, '\t'))
+        console.log('guardado')
+    } catch (err) {
+        console.log('error al guardar')
+    } 
+    res.json(ekis)
 })
 
 const PORT = 8080
