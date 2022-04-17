@@ -1,11 +1,47 @@
-const fs = require('fs');
 const express = require('express')
 
 const app = express();
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
+app.set('views', './views')
+app.set('view engine', 'pug');
+app.set('view engine', 'ejs');
 
+const producto = []
+
+
+app.get('/api', (req, res) => {
+    res.render('index.pug', {titulo: "Bienvenidos al Inicio", info: "Proceda a la seccion del formulario"});
+})
+
+app.post('/apis', (req, res) => {
+    res.redirect('/api/productos')
+})
+
+app.get('/api/productos', (req, res) => {
+    res.render('intro', { producto });
+})
+
+app.post('/api/productos/apis', (req, res) => {
+    res.redirect('/api')
+})
+
+app.post('/api/productos/cargados', (req, res) => {    
+    producto.push(req.body)
+    console.log(producto);
+    res.redirect('/api/productos')
+})
+
+
+const PORT = 8080
+const server = app.listen(PORT, () => {
+    console.log(`Servidor http escuchando en el puerto ${server.address().port}`)
+})
+
+
+
+/*
 class Archivo {
     constructor() {
         this.productos = [];
@@ -22,33 +58,14 @@ class Archivo {
                 console.log('error al guardar')
             }
     }
-        //const datos = await fs.promises.readFile('productos.js','utf-8')
 }
 
 const articulo = new Archivo;
 producto = [
-{
-    title: 'escuadra',
-    price: 123,
-    thumbnail: 'http://www.google.com.ar'
-}, {
-    title: 'calculadora',
-    price: 234,
-    thumbnail: 'http://www.google.com.ar'
-}, {
-    title: 'globo',
-    price: 345,
-    thumbnail: 'http://www.google.com.ar'
-}
 ];
-
 for (i in producto) {
     articulo.guardar(producto[i]);
 }
-app.get('/api/productos', ({ query }, res) => {
-    res.send(articulo);
-})
-
 app.get('/api/productos/:id', (req, res) => {
     const result = JSON.stringify(articulo)
     const codResult = JSON.parse(result)
@@ -65,7 +82,9 @@ app.get('/api/productos/:id', (req, res) => {
 })
 
 
-app.post('/api/productos', ({ body }, res) => {
+
+
+app.post('/api/productos/cargados', ({ body }, res) => {
     const result = JSON.stringify(articulo)
     const codResult = JSON.parse(result)
     const ekis = codResult.productos
@@ -79,8 +98,7 @@ app.post('/api/productos', ({ body }, res) => {
         console.log('error al guardar')
     }  
     console.log(ekis);
-    /*.forEach((item,index) => item.id = index)*/
-    res.json(ekis)
+    res.redirect('/api/productos')
 })
 
 app.put('/api/productos/:id', ({ body, params, req }, res) => {
@@ -125,9 +143,4 @@ app.delete('/api/productos/:id', ({ params }, res) => {
         console.log('error al guardar')
     } 
     res.json(ekis)
-})
-
-const PORT = 8080
-const server = app.listen(PORT, () => {
-    console.log(`Servidor http escuchando en el puerto ${server.address().port}`)
-})
+})*/
