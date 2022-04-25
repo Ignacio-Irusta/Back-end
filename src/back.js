@@ -1,45 +1,37 @@
 const express = require('express')
+const { Server: HttpServer } = require('http')
+const { Server: IOServer } = require('socket.io')
 
 const app = express();
-
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
-app.set('views', './views')
-app.set('view engine', 'pug');
-app.set('view engine', 'ejs');
+const httpServer = new HttpServer(app)
+const io = new IOServer(httpServer)
 
-const producto = []
+const productos = []
+const mensajes = []
 
+io.on('connection', socket => {
+    socket.emit('productos', productos);
+    socket.emit('mensajesActualizados', mensajes)
 
-app.get('/api', (req, res) => {
-    res.render('index.pug', {titulo: "Bienvenidos al Inicio", info: "Proceda a la seccion del formulario"});
-})
-
-app.post('/apis', (req, res) => {
-    res.redirect('/api/productos')
-})
-
-app.get('/api/productos', (req, res) => {
-    res.render('intro', { producto });
-})
-
-app.post('/api/productos/apis', (req, res) => {
-    res.redirect('/api')
-})
-
-app.post('/api/productos/cargados', (req, res) => {    
-    producto.push(req.body)
-    console.log(producto);
-    res.redirect('/api/productos')
-})
-
+    socket.on('update', producto => {
+        productos.push(producto)
+        io.sockets.emit('productos', productos);
+    })
+    socket.on('nuevoMensaje', mensaje => {
+        mensaje.fecha = new Date().toLocaleString()
+        mensajes.push(mensaje)
+        io.sockets.emit('mensajesActualizados', mensajes)
+    })
+});
 
 const PORT = 8080
-const server = app.listen(PORT, () => {
-    console.log(`Servidor http escuchando en el puerto ${server.address().port}`)
+const connectedServer = httpServer.listen(PORT, () => {
+    console.log(`Servidor http escuchando en el puerto ${connectedServer.address().port}`)
 })
-
-
+connectedServer.on('error', error => console.log(`Error en servidor ${error}`))
 
 /*
 class Archivo {

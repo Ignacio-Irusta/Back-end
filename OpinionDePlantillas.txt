@@ -1,2 +1,0 @@
-La plantilla de Pug la verdad no me gusto mucho, estoy acostumbrado a las llaves y no la termine de entender del todo,
-en cambio la de ejs se parece mas a la de HTML, me parecio sencilla y los cambios son minimos, asi que prefiero esa.
