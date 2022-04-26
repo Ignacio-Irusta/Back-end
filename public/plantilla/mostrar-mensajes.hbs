@@ -1,0 +1,19 @@
+{{#if mensajes.length}}
+<h2>Lista de Productos</h2>
+<div class="table-responsive">
+        <table>
+        {{#each mensajes}}
+            <tr>
+                <td>•</td>
+                <td class="text-danger">{{this.fecha}}</td>
+                <td> -- </td>
+                <td class="text-primary">{{this.autor}}</td>
+                <td>: </td>
+                <td class="text-success">{{this.texto}}</td>
+            </tr>
+        {{/each}}
+        </table>
+</div>
+{{ else }}
+<h3 class="alert alert-warning">No hay mensajes</h3>
+{{/if}}

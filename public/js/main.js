@@ -28,31 +28,25 @@ async function manejarEventoProductos(productos) {
 
 //MENSAJES
 
-function mostrarMensajes(mensajes) {
-    const mensajesParaMostrar = mensajes.map(({ fecha, autor, texto }) => {
-        return `<li>${fecha} - ${autor}: ${texto}</li>`
-    })
+const AgregarMensaje = document.getElementById('AgregarMensaje')
+AgregarMensaje.addEventListener('submit', e => {
+    e.preventDefault()
 
-    const mensajesHtml = `
-<ul>
-${mensajesParaMostrar.join('\n')}
-</ul>`
-
-    const listaMensajes = document.getElementById('listaMensajes')
-    listaMensajes.innerHTML = mensajesHtml
-}
-
-socket.on('mensajesActualizados', mensajes => {
-    mostrarMensajes(mensajes)
-})
-
-const botonEnviar = document.getElementById('botonEnviar')
-botonEnviar.addEventListener('click', e => {
-    const inputAutor = document.getElementById('inputMail')
-    const inputMensaje = document.getElementById('inputMensaje')
     const mensaje = {
-        autor: inputAutor.value,
-        texto: inputMensaje.value
+        autor: document.getElementById('inputMail').value,
+        texto: document.getElementById('inputMensaje').value,
     }
-    socket.emit('nuevoMensaje', mensaje)
+    socket.emit('nuevoMensaje', mensaje);
 })
+
+socket.on('mensajesActualizados', mostrarMensajes)
+
+
+async function mostrarMensajes(mensajes) {
+    const recursoMensaje = await fetch('plantilla/mostrar-mensajes.hbs')
+    const textoPlantilla = await recursoMensaje.text()
+    const functionTemplate = Handlebars.compile(textoPlantilla)
+    const html = functionTemplate({ mensajes })
+
+    document.getElementById('listaMensajes').innerHTML = html
+}
