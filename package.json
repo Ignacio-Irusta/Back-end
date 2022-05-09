@@ -1,32 +1,22 @@
 {
-  "name": "back-end",
+  "name": "nuevo",
   "version": "1.0.0",
   "description": "",
-  "main": "src/back.js",
-  "dependencies": {
-    "ejs": "^3.1.6",
-    "express": "^4.17.3",
-    "handlebars": "^4.7.7",
-    "i": "^0.3.7",
-    "multer": "^1.4.4",
-    "nodemon": "^2.0.15",
-    "pug": "^3.0.2",
-    "socket.io": "^4.4.1"
-  },
-  "devDependencies": {},
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon .",
-    "start:dev": "node back.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Ignacio-Irusta/Back-end.git"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Ignacio-Irusta/Back-end/issues"
+  "dependencies": {
+    "express": "^4.18.1",
+    "knex": "^2.0.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3",
+    "socket.io": "^4.5.0",
+    "sqlite3": "^5.0.8"
   },
-  "homepage": "https://github.com/Ignacio-Irusta/Back-end#readme"
+  "devDependencies": {
+    "@types/express": "^4.17.13"
+  }
 }
