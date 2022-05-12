@@ -1,4 +1,4 @@
-const optionsMysql = {
+module.exports = {
   client: 'mysql2',
   connection: {
     user: 'root',
@@ -7,5 +7,3 @@ const optionsMysql = {
     database: 'ecommerce'
   }
 }
-
-module.exports = optionsMysql;
